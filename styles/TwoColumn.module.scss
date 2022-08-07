@@ -1,0 +1,28 @@
+@use 'styles/mixins';
+.flexContainer {
+  composes: sideBySide from 'styles/utils.module.scss';
+  gap: var(--space-md);
+  margin: var(--space-md) 0 var(--space-lg);
+}
+.main {
+  @include mixins.responsive(pc) {
+    width: 768px;
+  }
+}
+.sidebar {
+  @include mixins.responsive(pc) {
+    width: 240px;
+    position: sticky;
+    top: 40px;
+    align-self: flex-start;
+    * {
+      text-align: right;
+    }
+    :is(div, ul) {
+      width: fit-content;
+      margin-left: auto;
+      place-items: flex-end;
+      place-content: flex-end;
+    }
+  }
+}

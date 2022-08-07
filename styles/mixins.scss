@@ -1,0 +1,25 @@
+// breakpoints
+$breakpoints: (
+  'sp': (
+    max-width: 767px,
+  ),
+  'pc': (
+    min-width: 768px,
+  ),
+) !default;
+
+// responsive
+@mixin responsive($breakpoint) {
+  @media screen and #{inspect(map-get($breakpoints, $breakpoint))} {
+    @content;
+  }
+}
+
+// hover
+@mixin hover() {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      @content;
+    }
+  }
+}

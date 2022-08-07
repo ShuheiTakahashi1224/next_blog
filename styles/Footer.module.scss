@@ -1,0 +1,7 @@
+.wrapper {
+  padding: var(--space-xl) 0;
+  background: var(--gray-10);
+}
+.flexContainer {
+  composes: sideBySideCenter from 'styles/utils.module.scss';
+}

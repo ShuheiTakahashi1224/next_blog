@@ -1,0 +1,11 @@
+@use 'mixins';
+
+.list {
+  display: flex;
+  gap: 2em;
+  a {
+    @include mixins.hover() {
+      color: var(--accent);
+    }
+  }
+}

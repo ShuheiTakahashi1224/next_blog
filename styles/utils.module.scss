@@ -1,0 +1,23 @@
+@use 'mixins';
+.spaceBetween {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.sideBySide {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  @include mixins.responsive(sp) {
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+}
+.sideBySideCenter {
+  composes: sideBySide;
+  align-items: center;
+  text-align: left;
+  @include mixins.responsive(sp) {
+    text-align: center;
+  }
+}
