@@ -14,3 +14,9 @@
 .subtitle {
   font-size: var(--small-heading2);
 }
+.image {
+  width: 50%;
+  @include mixins.responsive(sp) {
+    width: 100%;
+  }
+}
