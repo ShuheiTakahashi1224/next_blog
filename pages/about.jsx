@@ -8,10 +8,18 @@ import TwoColumnMain from 'components/TwoColumn/TwoColumnMain'
 import TwoColumnSide from 'components/TwoColumn/TwoColumnSide'
 import Image from 'next/image'
 import eyeCatch from 'images/about.jpg'
+import Meta from 'components/Meta'
 
 const About = () => {
   return (
     <Container>
+      <Meta
+        pageTitle="about"
+        pageDesc="About development activities"
+        pageImage={eyeCatch.src}
+        pageImageWidth={eyeCatch.width}
+        pageImageHeight={eyeCatch.height}
+      />
       <Hero title="About" subTitle="About development activities" />
       <figure>
         <Image
