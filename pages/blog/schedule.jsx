@@ -1,11 +1,14 @@
 import Container from 'components/Container'
+import PostHeader from 'components/PostHeader'
 import { getPostBySlug } from 'lib/api'
 import React from 'react'
 
 const Schedule = ({ title, publish, content, eyecatch, categories }) => {
   return (
     <Container>
-      <h1>{title}</h1>
+      <article>
+        <PostHeader title={title} subtitle={'Blog Article'} publish={publish} />
+      </article>
     </Container>
   )
 }
