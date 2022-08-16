@@ -1,0 +1,18 @@
+@use 'mixins';
+.flexContainer {
+  display: flex;
+  align-items: baseline;
+  gap: 1.25rem;
+  color: var(--gray-50);
+  @include mixins.responsive(pc) {
+    flex-direction: column;
+  }
+}
+.heading {
+  font-size: var(--small-heading2);
+}
+.list {
+  composes: flexContainer;
+  font-size: var(--small-heading3);
+  gap: 0.75em;
+}
