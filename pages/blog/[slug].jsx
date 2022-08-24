@@ -4,7 +4,7 @@ import PostHeader from 'components/PostHeader'
 import TwoColumn from 'components/TwoColumn/TwoColumn'
 import TwoColumnMain from 'components/TwoColumn/TwoColumnMain'
 import TwoColumnSide from 'components/TwoColumn/TwoColumnSide'
-import { getPostBySlug } from 'lib/api'
+import { getAllSlugs, getPostBySlug } from 'lib/api'
 import Image from 'next/image'
 import React from 'react'
 import ConvertBody from 'components/ConvertBody'
@@ -13,14 +13,18 @@ import { extractText } from 'lib/extractText'
 import Meta from 'components/Meta'
 import { eyecatchLocal } from 'lib/constans'
 import { getPlaiceholder } from 'plaiceholder'
+import { prevNextPost } from 'lib/prev-next-post'
+import Pagination from 'components/Pagination'
 
-const Schedule = ({
+const Post = ({
   title,
   publish,
   content,
   eyecatch,
   categories,
   description,
+  prevPost,
+  nextPost,
 }) => {
   return (
     <Container>
@@ -56,18 +60,34 @@ const Schedule = ({
             <PostCategories categories={categories} />
           </TwoColumnSide>
         </TwoColumn>
+        <Pagination
+          prevText={prevPost.title}
+          prevUrl={`/blog/${prevPost.slug}`}
+          nextText={nextPost.title}
+          nextUrl={`/blog/${nextPost.slug}`}
+        />
       </article>
     </Container>
   )
 }
 
-export async function getStaticProps() {
-  const slug = 'micro'
+export async function getStaticPaths() {
+  const allSlugs = await getAllSlugs()
+  return {
+    paths: allSlugs.map(({ slug }) => `/blog/${slug}`),
+    fallback: false,
+  }
+}
+
+export async function getStaticProps(context) {
+  const slug = context.params.slug
   const post = await getPostBySlug(slug)
   const description = extractText(post.content)
   const eyecatch = post.eyecatch ?? eyecatchLocal
   const { base64 } = await getPlaiceholder(eyecatch.url)
   eyecatch.blurDataURL = base64
+  const allSlugs = await getAllSlugs()
+  const [prevPost, nextPost] = prevNextPost(allSlugs, slug)
   return {
     props: {
       title: post.title,
@@ -76,8 +96,10 @@ export async function getStaticProps() {
       eyecatch: eyecatch,
       categories: post.categories,
       description: description,
+      prevPost: prevPost,
+      nextPost: nextPost,
     },
   }
 }
 
-export default Schedule
+export default Post
